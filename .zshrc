@@ -54,3 +54,4 @@ function racd () {
 	cd $(ra "$1")
 }
 set -o noclobber
+export PATH=$PATH:$HOME/.emacs.d/bin

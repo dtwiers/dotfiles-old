@@ -6,6 +6,7 @@ export PATH=$PATH:$HOME/bin
 plugins=(git npm zsh-autosuggestions z)
 source $ZSH/oh-my-zsh.sh
 alias em='emacsclient --create-frame --alternate-editor=vim'
+alias node-scripts="(cat package.json 2>/dev/null || cat ../package.json 2>/dev/null || cat ../../package.json) | jq .scripts"
 export EDITOR='emacsclient -t'
 export VISUAL='emacsclient -c -a emacs'
 

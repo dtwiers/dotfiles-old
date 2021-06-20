@@ -1,7 +1,0 @@
-.vim-force.com
-.vscode
-.DS_Store
-__pycache__
-.idea
-*.sublime-project
-*.sublime-workspace

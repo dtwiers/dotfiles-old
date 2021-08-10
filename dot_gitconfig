@@ -22,3 +22,5 @@
     lb = branch -l
     # list all branches
     lab = branch -al
+[init]
+    defaultBranch = main

@@ -1,0 +1,36 @@
+Config { font = "xft:Cascadia Code PL:size=9:antialias=true"
+       , additionalFonts = []
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "#111111"
+       , fgColor = "grey"
+       , alpha = 127
+       , position = Top
+       , textOffset = 20
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Weather "KAMW" ["-t","<skyCondition> | <tempF>°F | <rh>% (<dewPointF>°F) | <fc=#4682B4><pressure></fc>hPa",
+                                          "-L","32","-H","95",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run DynNetwork ["-S", "-t", "<rxvbar> <rx> / <txvbar> <tx>", "-L","0","-H","1000000000",
+                                          "--normal","green","--high","red"] 10
+                    , Run Cpu ["-L","3","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Swap [] 10
+                    , Run Com "uname" ["-s","-r"] "" 36000
+                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = " <action=`xrandr --output DP-2 --mode 1920x1080` button=1>pres</action> | <action=`xrandr --output DP-2 --mode 3840x2160` button=1>max</action> | %cpu% | %memory% * %swap% | %dynnetwork% }\
+                    \{ %KAMW% | <fc=#aaff00>%date%</fc> "
+       }

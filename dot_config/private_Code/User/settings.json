@@ -1,0 +1,51 @@
+{
+  "workbench.colorTheme": "Bearded Theme Vivid Black",
+  "FSharp.dotNetRoot": "/snap/bin/dotnet",
+  "editor.fontFamily": "Cascadia Code",
+  "editor.fontWeight": 300,
+  "editor.fontLigatures": true,
+  "editor.lineHeight": 20,
+  "terminal.integrated.fontFamily": "Cascadia Code PL",
+  "terminal.integrated.fontWeight": 300,
+  "terminal.integrated.letterSpacing": 0,
+  "workbench.iconTheme": "helium-icon-theme",
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.singleQuote": true,
+  "prettier.arrowParens": "avoid",
+  "prettier.printWidth": 100,
+  "prettier.jsxSingleQuote": true,
+  "prettier.trailingComma": "none",
+  "editor.minimap.maxColumn": 100,
+  "editor.rulers": [100],
+  "vim.statusBarColors.normal": "#005f5f",
+  "vim.statusBarColors.insert": "#2f0080",
+  "vim.statusBarColorControl": true,
+  "vim.statusBarColors.visual": "#5f00af",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.tree.indent": 24,
+  "window.zoomLevel": 1,
+  "editor.maxTokenizationLineLength": 80000
+}

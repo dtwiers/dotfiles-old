@@ -1,7 +1,6 @@
 {
   "workbench.colorTheme": "Bearded Theme Vivid Black",
-  "FSharp.dotNetRoot": "/snap/bin/dotnet",
-  "editor.fontFamily": "Cascadia Code",
+  "editor.fontFamily": "Cascadia Code PL",
   "editor.fontWeight": 300,
   "editor.fontLigatures": true,
   "editor.lineHeight": 20,
@@ -46,6 +45,6 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "workbench.tree.indent": 24,
-  "window.zoomLevel": 1,
-  "editor.maxTokenizationLineLength": 80000
+  "editor.maxTokenizationLineLength": 80000,
+  "window.zoomLevel": 1
 }

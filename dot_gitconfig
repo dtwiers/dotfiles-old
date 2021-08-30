@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /home/derek/.gitignore_global
+    excludesfile = /home/derek/.gitignore_global
 [user]
     name = Derek Wiers
     email = derek.wiers@brandingbrand.com
@@ -24,3 +24,11 @@
     lab = branch -al
 [init]
     defaultBranch = main
+[diff]
+    tool = vscode
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+    tool = vscode
+[mergetool "vscode"]
+    cmd = code --wait $MERGED

@@ -13,7 +13,7 @@ import XMonad.Util.Run
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Gaps
 import XMonad.Layout.Spacing
-import Data.Monoid
+import XMonad.Util.EZConfig
 import System.Exit
 
 import qualified XMonad.StackSet as W
@@ -22,8 +22,9 @@ import qualified Data.Map        as M
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "/usr/bin/terminator"
-
+-- myTerminal      = "/usr/bin/terminator"
+myTerminal :: String
+myTerminal = "kitty"
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
@@ -32,35 +33,34 @@ myFocusFollowsMouse = False
 myClickJustFocuses :: Bool
 myClickJustFocuses = False 
 
--- Width of the window border in pixels.
---
-myBorderWidth   = 3
+myBorderWidth :: Integer
+myBorderWidth   = 5
 
--- modMask lets you specify which modkey you want to use. The default
--- is mod1Mask ("left alt").  You may also consider using mod3Mask
--- ("right alt"), which does not conflict with emacs keybindings. The
--- "windows key" is usually mod4Mask.
---
+myModMask :: KeyMask
 myModMask       = mod4Mask
 
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
---
--- A tagging example:
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+taggedWorkspaces :: [String]
+taggedWorkspaces = ["1:main", "2:dev", "3:term", "4:com", "5:ent", "6:pres", "7:per", "8:float"]
 
--- Border colors for unfocused and focused windows, respectively.
---
+myWorkspaces :: [String]
+myWorkspaces    = taggedWorkspaces ++ ["9"]
+
+myNormalBorderColor :: String
 myNormalBorderColor  = "#000000"
+
+myFocusedBorderColor :: String
 myFocusedBorderColor = "#3300ff"
 
-------------------------------------------------------------------------
--- Key bindings. Add, modify or remove key bindings here.
+myEZKeys :: [(String, X ())]
+myEZKeys =
+    [ ("<XF86AudioRaiseVolume>", spawn "amixer -q sset Master 5%+")
+    , ("<XF86AudioLowerVolume>", spawn "amixer -q sset Master 5%-")
+    , ("<XF86AudioPlay>", spawn "sp play")
+    , ("<XF86AudioStop>", spawn "sp pause")
+    , ("<XF86AudioPrev>", spawn "sp prev")
+    , ("<XF86AudioNext>", spawn "sp next")
+    , ("<XF86AudioMute>", spawn "amixer -D pulse -q set Master 1+ toggle")
+    ]
 --
 myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
@@ -121,13 +121,18 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
+--    , ((0,                  xF86XK_AudioLowerVolume), lowerVolume 2 >> return ())
+--    , ((0,                  xF86XK_AudioRaiseVolume), raiseVolume 2 >> return ())
+--    , ((0,                  xF86XK_AudioMute), toggleMute 2 >> return ())
+
+
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
     , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
-    , ((0       , xK_F12 ), spawn "scrot -fs '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'")
+    , ((0       , xK_Print ), spawn "scrot -fs '/tmp/%F_%T_$wx$h.png' -e 'xclip -selection clipboard -target image/png -i $f'")
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
@@ -179,8 +184,8 @@ myMouseBindings XConfig {XMonad.modMask = modm} = M.fromList
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
-displayGap = Border 10 10 10 10
-windowGap = Border 12 12 12 12
+displayGap = Border 6 6 6 6
+windowGap = Border 8 8 8 8
 ------------------------------------------------------------------------
 -- Layouts:
 
@@ -224,6 +229,8 @@ myLayout = avoidStruts $ spacingRaw True displayGap True windowGap True $ gaps [
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "jetbrains-studio" --> doFloat
+    , title =? "Android Emulator - Pixel_4_XL_API_29:5554" --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 
@@ -295,11 +302,11 @@ defaults = def {
         handleEventHook    = myEventHook,
         logHook            = myLogHook,
         startupHook        = myStartupHook
-    }
+    } `additionalKeysP` myEZKeys
 
 -- | Finally, a copy of the default bindings in simple textual tabular format.
 help :: String
-help = unlines ["The default modifier key is 'alt'. Default keybindings:",
+help = unlines ["The default modifier key is 'super'. Default keybindings:",
     "",
     "-- launching and killing programs",
     "mod-Shift-Enter  Launch xterminal",

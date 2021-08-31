@@ -1,5 +1,9 @@
 export ZSH="/home/derek/.oh-my-zsh"
 export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/.deno/bin
+fpath=(~/.zsh $fpath)
+autoload -Uz compinit
+compinit -u
 # ZSH_THEME="robbyrussell"
 export _JAVA_AWT_WM_NONREPARENTING=1
 

@@ -1,72 +1,58 @@
-export ZSH="/home/derek/.oh-my-zsh"
+export ZSH={{ (joinPath .chezmoi.homeDir ".oh-my-zsh") | quote }}
 export PATH=$PATH:$HOME/bin
-# ZSH_THEME="robbyrussell"
+{{ if ne .chezmoi.os "darwin" -}}
 export _JAVA_AWT_WM_NONREPARENTING=1
+{{- end }}
 
-# plugins=(git)
+# ZSH plugins
 plugins=(git npm zsh-autosuggestions z zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
+
+# Handy Random Aliases
 alias em='emacsclient --create-frame --alternate-editor=vim'
 alias node-scripts="(cat package.json 2>/dev/null || cat ../package.json 2>/dev/null || cat ../../package.json) | jq .scripts"
-# export EDITOR='emacsclient -t'
-# export VISUAL='emacsclient -c -a emacs'
+alias ns=node-scripts
+
+# Editors
 export EDITOR='vim'
 export VISUAL='vim'
+
+# Chezmoi
 alias caf='chezmoi apply --force'
 alias ca='chezmoi apply'
 alias cdiff='chezmoi diff'
 alias ccd='chezmoi cd'
 alias cedit='chezmoi edit'
 
-# function preexec() {
-  # __TIMER=$EPOCHREALTIME
-# }
-# 
-# function powerline_precmd() {
-  # local __ERRCODE=$?
-  # local __DURATION=0
-# 
-  # if [ -n $__TIMER ]; then
-    # local __ERT=$EPOCHREALTIME
-    # __DURATION="$(($__ERT - ${__TIMER:-__ERT}))"
-  # fi
-	# eval "$(powerline-go -eval -modules-right duration -modules ssh,cwd,perms,git,newline,jobs,exit,root -duration $__DURATION -error $__ERRCODE -error $? -jobs ${${(%):%j}:-0})"
-	# unset timer
-# }
-# 
-# function install_powerline_precmd() {
-	# for s in "${precmd_functions[@]}"; do
-		# if [ "$s" = "powerline_precmd" ]; then
-			# return
-		# fi
-	# done
-	# precmd_functions+=(powerline_precmd)
-# }
-# 
-# if [ "$TERM" != "linux" ] && [ -f $(which powerline-go) ]; then
-    # install_powerline_precmd
-# fi
 
+{{ if eq .chezmoi.os "darwin" -}}
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 # [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+{{ else -}}
 source /usr/share/nvm/init-nvm.sh
+{{- end }}
 
+# Deprecated zsh tools
 alias mux=tmuxinator
 alias zedit='vim ~/.zshrc'
 alias src='source ~/.zshrc'
 
-export ANDROID_HOME=/home/derek/Android/Sdk
+export ANDROID_HOME={{ joinPath .chezmoi.homeDir "Android" "Sdk"}}
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+# User Scripts
 export PATH=$PATH:$HOME/scripts
+# Doom Emacs
 export PATH=$PATH:$HOME/.emacs.d/bin
 
+# Completion
 autoload -U compinit
 compinit -i
 
-
+# Repo Adict
 function racd () {
     cd $(ra "$1")
 }
@@ -74,4 +60,6 @@ function racd () {
 function vcd () {
     cat $(ra --edit)
 }
+
+# Starship Prompt
 eval "$(starship init zsh)"

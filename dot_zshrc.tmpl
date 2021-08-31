@@ -16,6 +16,8 @@ source $ZSH/oh-my-zsh.sh
 alias em='emacsclient --create-frame --alternate-editor=vim'
 alias node-scripts="(cat package.json 2>/dev/null || cat ../package.json 2>/dev/null || cat ../../package.json) | jq .scripts"
 alias ns=node-scripts
+alias el='exa -l'
+alias El='exa -al'
 
 # Editors
 export EDITOR='vim'

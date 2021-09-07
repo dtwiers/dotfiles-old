@@ -18,6 +18,10 @@ alias node-scripts="(cat package.json 2>/dev/null || cat ../package.json 2>/dev/
 alias ns=node-scripts
 alias el='exa -l'
 alias El='exa -al'
+function ec () {
+    [[ $1 = "on" ]] && curl -X PUT -H "Content-Type: application/json" -d '{"numberOfLights":1,"lights":[{"on":1}]}' "http://192.168.1.198:9123/elgato/lights" >/dev/null 2>&1
+    [[ $1 = "off" ]] && curl -X PUT -H "Content-Type: application/json" -d '{"numberOfLights":1,"lights":[{"on":0}]}' "http://192.168.1.198:9123/elgato/lights" >/dev/null 2>&1
+}
 
 # Editors
 export EDITOR='vim'

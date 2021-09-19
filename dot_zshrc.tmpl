@@ -7,6 +7,8 @@ export PATH=$PATH:$HOME/.deno/bin
 fpath=(~/.zsh $fpath)
 autoload -Uz compinit
 compinit -u
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/tools:$PATH
 
 # ZSH plugins
 plugins=(git npm zsh-autosuggestions z zsh-syntax-highlighting)
@@ -17,11 +19,24 @@ alias em='emacsclient --create-frame --alternate-editor=vim'
 alias node-scripts="(cat package.json 2>/dev/null || cat ../package.json 2>/dev/null || cat ../../package.json) | jq .scripts"
 alias ns=node-scripts
 alias el='exa -l'
-alias El='exa -al'
+alias El='exa -al --git'
 function ec () {
     [[ $1 = "on" ]] && curl -X PUT -H "Content-Type: application/json" -d '{"numberOfLights":1,"lights":[{"on":1}]}' "http://192.168.1.198:9123/elgato/lights" >/dev/null 2>&1
     [[ $1 = "off" ]] && curl -X PUT -H "Content-Type: application/json" -d '{"numberOfLights":1,"lights":[{"on":0}]}' "http://192.168.1.198:9123/elgato/lights" >/dev/null 2>&1
 }
+function present () {
+    xrandr --output $1 --mode 2560x1440
+}
+function full () {
+    xrandr --output $1 --mode 3840x2160
+}
+alias p0='present DP-0'
+alias f0='full DP-0'
+alias p2='present DP-2'
+alias f2='full DP-2'
+type nvim >/dev/null && alias vim=nvim
+type nvim >/dev/null && export EDITOR='nvim'
+type nvim >/dev/null && export VISUAL='nvim'
 
 # Editors
 export EDITOR='vim'
@@ -73,3 +88,8 @@ function vcd () {
 
 # Starship Prompt
 eval "$(starship init zsh)"
+type neofetch >/dev/null && neofetch
+type screenfetch >/dev/null && ! type neofetch >/dev/null && screenfetch
+function backup () {
+    mv "$1" "$1.bak"
+}

@@ -49,14 +49,13 @@ alias cdiff='chezmoi diff'
 alias ccd='chezmoi cd'
 alias cedit='chezmoi edit'
 
-
-{{ if eq .chezmoi.os "darwin" -}}
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-{{ else -}}
-source /usr/share/nvm/init-nvm.sh
-{{- end }}
+if [ -d "$HOME/.nvm" ] ; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+else
+  source /usr/share/nvm/init-nvm.sh
+fi
 
 # Deprecated zsh tools
 alias mux=tmuxinator
@@ -93,3 +92,4 @@ type screenfetch >/dev/null && ! type neofetch >/dev/null && screenfetch
 function backup () {
     mv "$1" "$1.bak"
 }
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
